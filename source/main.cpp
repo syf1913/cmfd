@@ -1,53 +1,47 @@
-#include <iostream>
+#include <exception>
+#include <string>
 
-#include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
 
-#include <xtensor/containers/xarray.hpp>
-#include <xtensor/core/xmath.hpp>
-#include <xtensor/io/xio.hpp>
-#include <xtensor/views/xview.hpp>
+#include "PostProcessor.hpp"
+#include "ProblemAssembler.hpp"
+#include "Reporter.hpp"
+#include "SimulationConfig.hpp"
+#include "SolverFactory.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
-    const std::string commented_json = R"json(
+    try
     {
-        // line comment
-        "name": "Alice",
-        /* block comment */
-        "age": 22
-    }
-    )json";
-    nlohmann::json parsed = nlohmann::json::parse(commented_json, nullptr, true, true);
+        const std::string input_file_path = (argc > 1) ? argv[1] : "input.json";
 
-    xt::xtensor<int, 2> matrix = {{0, 0, 0}, {0, 0, 0}};
-    int value = 1;
-    for (std::size_t row = 0; row < matrix.shape()[0]; ++row)
+        const SimulationConfig simulation_config;
+        const SimulationInput simulation_input = simulation_config.loadFromFile(input_file_path);
+
+        const ProblemAssembler problem_assembler;
+        LinearSystem system = problem_assembler.build(simulation_input);
+
+        const SolverFactory solver_factory;
+        const auto solver = solver_factory.create(simulation_input.solver_type);
+        const SolverResult solver_result = solver->solve(system, simulation_input);
+
+        const PostProcessor post_processor;
+        const PostProcessResult post_process_result = post_processor.build(simulation_input, system);
+
+        const Reporter reporter;
+        reporter.writeOutput(argv[0], simulation_input, solver_result, post_process_result);
+        reporter.printConsoleSummary(argv[0],
+                                     input_file_path,
+                                     simulation_input,
+                                     solver_result,
+                                     post_process_result);
+    }
+    catch (const std::exception& exception)
     {
-        for (std::size_t col = 0; col < matrix.shape()[1]; ++col)
-        {
-            matrix(row, col) = value++;
-        }
+        spdlog::set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] %s:%# %v");
+        SPDLOG_ERROR("Error: {}", exception.what());
+        return 1;
     }
 
-    nlohmann::json user = {
-        {"name", "Alice"},
-        {"age", 22},
-        {"skills", {"C++", "CMake", "JSON", "spdlog", "xtensor"}}};
-
-    user["active"] = true;
-    user["matrix"] = {
-        {matrix(0, 0), matrix(0, 1), matrix(0, 2)},
-        {matrix(1, 0), matrix(1, 1), matrix(1, 2)}};
-
-    std::cout << "Pretty JSON:\n"
-              << user.dump(4) << "\n\n";
-    spdlog::info("Serialized user json length: {}", user.dump().size());
-
-    std::string name = parsed.at("name").get<std::string>();
-    int age = parsed.at("age").get<int>();
-
-    std::cout << "name=" << name << ", age=" << age << '\n';
-    std::cout << "matrix(1,2)=" << matrix(1, 2) << '\n';
     return 0;
 }

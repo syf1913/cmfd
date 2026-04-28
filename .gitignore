@@ -1,5 +1,13 @@
 .vscode/
 .cache/
 .tmp-third-part/
+.codex
+.codex/
+.clangd
 
+*.dat
+*.json
+*.log
+
+reference/
 build/

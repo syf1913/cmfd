@@ -25,16 +25,22 @@ if(NOT EXISTS "${SPDLOG_DIR}/include/spdlog/spdlog.h")
     message(FATAL_ERROR "Missing spdlog header. Expected: ${SPDLOG_DIR}/include/spdlog/spdlog.h")
 endif()
 
-# if(NOT EXISTS "${XTL_DIR}/include/xtl/xsequence.hpp")
-#     message(FATAL_ERROR "Missing xtl header. Expected: ${XTL_DIR}/include/xtl/xsequence.hpp")
-# endif()
+if(NOT EXISTS "${XTL_DIR}/include/xtl/xsequence.hpp")
+    message(FATAL_ERROR "Missing xtl header. Expected: ${XTL_DIR}/include/xtl/xsequence.hpp")
+endif()
 
-# if(NOT EXISTS "${XTENSOR_DIR}/include/xtensor/xarray.hpp")
-#     message(FATAL_ERROR "Missing xtensor header. Expected: ${XTENSOR_DIR}/include/xtensor/xarray.hpp")
-# endif()
+if(NOT EXISTS "${XTENSOR_DIR}/include/xtensor/containers/xtensor.hpp")
+    message(FATAL_ERROR "Missing xtensor header. Expected: ${XTENSOR_DIR}/include/xtensor/containers/xtensor.hpp")
+endif()
 
 add_executable(cmfd
+    source/LinearSystem.cpp
+    source/PostProcessor.cpp
+    source/ProblemAssembler.cpp
+    source/Reporter.cpp
     source/main.cpp
+    source/SimulationConfig.cpp
+    source/SolverFactory.cpp
 )
 
 target_include_directories(cmfd
