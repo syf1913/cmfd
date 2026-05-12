@@ -15,8 +15,7 @@ int main(int argc, char* argv[])
     {
         const std::string input_file_path = (argc > 1) ? argv[1] : "input.json";
 
-        const SimulationConfig simulation_config;
-        const SimulationInput simulation_input = simulation_config.loadFromFile(input_file_path);
+        const SimulationInput simulation_input = SimulationConfig::loadFromFile(input_file_path);
 
         const ProblemAssembler problem_assembler;
         LinearSystem system = problem_assembler.build(simulation_input);

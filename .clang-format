@@ -1,84 +1,86 @@
-#AccessModifierOffset: 2
-AlignAfterOpenBracket: Align
-AlignConsecutiveAssignments: false
-#AlignConsecutiveBitFields: false
-AlignConsecutiveDeclarations: false
-AlignConsecutiveMacros: false
-AlignEscapedNewlines: Right
-#AlignOperands: AlignAfterOperator
-AlignTrailingComments: true
-AllowAllArgumentsOnNextLine: false
-AllowAllConstructorInitializersOnNextLine: false
-AllowAllParametersOfDeclarationOnNextLine: false
-AllowShortBlocksOnASingleLine: Empty
-AllowShortCaseLabelsOnASingleLine: false
-#AllowShortEnumsOnASingleLine: true
-AllowShortFunctionsOnASingleLine: Empty
-AllowShortIfStatementsOnASingleLine: Never
-AllowShortLambdasOnASingleLine: Empty
-AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterReturnType: None
-AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: Yes
-BinPackArguments: false
-BinPackParameters: false
-#BitFieldColonSpacing: Both
-BreakBeforeBraces: Custom # or Allman
-BraceWrapping:
-  AfterCaseLabel: true
-  AfterClass: true
-  AfterControlStatement: Always
-  AfterEnum: true
-  AfterFunction: true
-  AfterNamespace: false
-  AfterStruct: true
-  AfterUnion: true
-  AfterExternBlock: false
-  BeforeCatch: true
-  BeforeElse: true
-  #BeforeLambdaBody: false
-  #BeforeWhile: false
-  SplitEmptyFunction: false
-  SplitEmptyRecord: false
-  SplitEmptyNamespace: false
-BreakBeforeTernaryOperators: true
-BreakConstructorInitializers: BeforeComma
-BreakStringLiterals: false
-ColumnLimit: 0
-CompactNamespaces: false
-ConstructorInitializerIndentWidth: 2
-Cpp11BracedListStyle: true
-PointerAlignment: Left
-FixNamespaceComments: true
-IncludeBlocks: Preserve
-#IndentCaseBlocks: false
-IndentCaseLabels: true
-IndentGotoLabels: false
-IndentPPDirectives: BeforeHash
-IndentWidth: 4
-KeepEmptyLinesAtTheStartOfBlocks: false
-MaxEmptyLinesToKeep: 1
-NamespaceIndentation: None
-ReflowComments: false
-SortIncludes: true
-SortUsingDeclarations: true
-SpaceAfterCStyleCast: false
-SpaceAfterLogicalNot: false
-SpaceAfterTemplateKeyword: false
-SpaceBeforeAssignmentOperators: true
-SpaceBeforeCpp11BracedList: false
-SpaceBeforeParens: ControlStatements
-SpaceBeforeRangeBasedForLoopColon: true
-SpaceBeforeSquareBrackets: false
-SpaceInEmptyBlock: false
-SpaceInEmptyParentheses: false
-SpacesBeforeTrailingComments: 2
-SpacesInAngles: false
-SpacesInCStyleCastParentheses: false
-SpacesInConditionalStatement: false
-SpacesInContainerLiterals: false
-SpacesInParentheses: false
-SpacesInSquareBrackets: false
-Standard: c++11
-TabWidth: 4
-UseTab: Never
+AccessModifierOffset: -4                                          # 访问修饰符不缩进 (public/private/protected 与类成员左对齐)
+AlignAfterOpenBracket: Align                                      # 开括号后参数对齐方式: Align (对齐首参数) / DontAlign / AlwaysBreak
+AlignConsecutiveAssignments: false                              # 不对齐连续赋值语句的等号
+# AlignConsecutiveAssignments: true                                 # 不对齐连续赋值语句的等号
+# AlignConsecutiveBitFields: false                                # 不对齐连续的位域声明
+AlignConsecutiveDeclarations: false                               # 不对齐连续的变量声明
+# AlignConsecutiveDeclarations: true                              # 不对齐连续的变量声明
+AlignConsecutiveMacros: false                                     # 不对齐连续的宏定义
+AlignEscapedNewlines: Right                                       # 换行符 \ 右对齐
+# AlignOperands: AlignAfterOperator                               # 操作数对齐方式
+AlignTrailingComments: true                                       # 对齐行尾注释
+AllowAllArgumentsOnNextLine: false                                # 不允许所有参数放在下一行
+AllowAllConstructorInitializersOnNextLine: false                  # 不允许所有构造函数初始化器放在下一行
+AllowAllParametersOfDeclarationOnNextLine: false                  # 不允许所有函数声明参数放在下一行
+AllowShortBlocksOnASingleLine: Empty                              # 仅空块允许放在单行
+AllowShortCaseLabelsOnASingleLine: false                          # case 标签不允许与语句同行
+# AllowShortEnumsOnASingleLine: true                              # 允许短枚举放在单行
+AllowShortFunctionsOnASingleLine: Empty                           # 仅空函数允许放在单行
+AllowShortIfStatementsOnASingleLine: Never                        # if 语句不允许放在单行
+AllowShortLambdasOnASingleLine: Empty                             # 仅空 lambda 允许放在单行
+AllowShortLoopsOnASingleLine: false                               # 循环语句不允许放在单行
+AlwaysBreakAfterReturnType: None                                  # 返回类型后不强制换行 (None / All / TopLevelDefinitions)
+AlwaysBreakBeforeMultilineStrings: false                          # 多行字符串前不强制换行
+AlwaysBreakTemplateDeclarations: Yes                              # template 声明后始终换行
+BinPackArguments: false                                           # 函数参数不打包 (每个参数独占一行)
+BinPackParameters: false                                          # 函数形参不打包 (每个形参独占一行)
+# BitFieldColonSpacing: Both                                      # 位域冒号两侧空格
+BreakBeforeBraces: Custom                                         # 大括号换行风格: Custom (按 BraceWrapping 自定义) / Allman
+BraceWrapping:                                                    # 大括号换行详细设置
+  AfterCaseLabel: true                                            # case 标签后大括号换行
+  AfterClass: true                                                # 类/结构体定义后大括号换行
+  AfterControlStatement: Always                                   # 控制语句后大括号始终换行 (Always / Never / MultiLine)
+  AfterEnum: true                                                 # 枚举定义后大括号换行
+  AfterFunction: true                                             # 函数定义后大括号换行
+  AfterNamespace: false                                           # 命名空间后大括号不换行
+  AfterStruct: true                                               # struct 定义后大括号换行
+  AfterUnion: true                                                # union 定义后大括号换行
+  AfterExternBlock: false                                         # extern "C" 块后大括号不换行
+  BeforeCatch: true                                               # catch 前大括号换行
+  BeforeElse: true                                                # else 前大括号换行
+  # BeforeLambdaBody: false                                       # lambda 体前大括号不换行
+  # BeforeWhile: false                                            # do-while 的 while 前大括号不换行
+  SplitEmptyFunction: false                                       # 空函数体不拆分
+  SplitEmptyRecord: false                                         # 空记录体不拆分
+  SplitEmptyNamespace: false                                      # 空命名空间体不拆分
+BreakBeforeTernaryOperators: true                                 # 三元运算符 ? : 放在下一行首
+BreakConstructorInitializers: BeforeComma                         # 构造函数初始化列表在逗号前换行
+BreakStringLiterals: false                                        # 不拆分字符串字面量
+ColumnLimit: 0                                                    # 列宽限制: 0 = 不限制
+CompactNamespaces: false                                          # 命名空间不压缩为单行
+ConstructorInitializerIndentWidth: 2                              # 构造函数初始化列表缩进宽度
+Cpp11BracedListStyle: true                                        # C++11 大括号列表风格 (空格仅在花括号内)
+PointerAlignment: Left                                            # 指针/引用符号左对齐 (int *p / int &r)
+FixNamespaceComments: true                                        # 为关闭的命名空间添加注释 // namespace xxx
+IncludeBlocks: Preserve                                           # 保留原有 include 分组结构
+# IndentCaseBlocks: false                                         # case 块内容不额外缩进
+IndentCaseLabels: true                                            # case 标签缩进一级
+IndentGotoLabels: false                                           # goto 标签不缩进 (顶格)
+IndentPPDirectives: BeforeHash                                    # 预处理指令 # 前缩进 (BeforeHash / AfterHash / None)
+IndentWidth: 4                                                    # 缩进宽度为 4 个空格
+KeepEmptyLinesAtTheStartOfBlocks: false                           # 移除块开头的空行
+MaxEmptyLinesToKeep: 1                                            # 最多保留 1 个连续空行
+NamespaceIndentation: None                                        # 命名空间内容不额外缩进
+ReflowComments: false                                             # 不自动重排注释
+SortIncludes: true                                                # 对 #include 进行排序
+SortUsingDeclarations: true                                       # 对 using 声明进行排序
+SpaceAfterCStyleCast: false                                       # C 风格类型转换后不加空格
+SpaceAfterLogicalNot: false                                       # 逻辑非 ! 后不加空格
+SpaceAfterTemplateKeyword: false                                  # template 关键字后不加空格
+SpaceBeforeAssignmentOperators: true                              # 赋值运算符前加空格
+SpaceBeforeCpp11BracedList: false                                 # C++11 大括号初始化列表前不加空格
+SpaceBeforeParens: ControlStatements                              # 控制语句关键字后在圆括号前加空格 (if / for / while 等)
+SpaceBeforeRangeBasedForLoopColon: true                           # 范围 for 循环冒号前加空格
+SpaceBeforeSquareBrackets: false                                  # 方括号前不加空格
+SpaceInEmptyBlock: false                                          # 空大括号内不加空格 {}
+SpaceInEmptyParentheses: false                                    # 空圆括号内不加空格 ()
+SpacesBeforeTrailingComments: 2                                   # 行尾注释前至少 2 个空格
+SpacesInAngles: false                                             # 尖括号内不加空格 (模板参数)
+SpacesInCStyleCastParentheses: false                              # C 风格类型转换括号内不加空格
+SpacesInConditionalStatement: false                               # 条件语句括号内不加空格
+SpacesInContainerLiterals: false                                  # 容器字面量括号内不加空格
+SpacesInParentheses: false                                        # 圆括号内不加空格
+SpacesInSquareBrackets: false                                     # 方括号内不加空格
+Standard: c++11                                                   # C++ 标准版本
+TabWidth: 4                                                       # Tab 显示宽度为 4
+UseTab: Never                                                     # 从不使用 Tab, 始终使用空格缩进

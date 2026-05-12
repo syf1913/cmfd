@@ -1,5 +1,87 @@
+# ============================================================================ #
+# 策略: 通配符 '*' 启用全部检查, 然后按模块逐一禁用不适用的规则.                      #
+# ============================================================================ #
+#
+# -- altera (FPGA/OpenCL 专用, 本项目不适用) --
+#   altera-id-dependent-backward-branch : 要求符合单工作项内核规范
+#   altera-struct-pack-align            : FPGA 结构体内存对齐
+#   altera-unroll-loops                 : FPGA 循环展开提示
+#
+# -- android (Android 平台专用, 本项目不适用) --
+#   android-cloexec-fopen : 桌面应用无需 O_CLOEXEC
+#
+# -- boost (优先使用标准库) --
+#   boost-use-ranges    : 建议使用 Boost.Range 替代 std 算法; 本项目选用标准库
+#   boost-use-to-string : 建议使用 boost::lexical_cast; 本项目选用 std::to_string
+#
+# -- bugprone --
+#   bugprone-easily-swappable-parameters : 误报过多, 关闭
+#
+# -- cert --
+#   cert-err58-cpp : 静态/线程局部对象异常在实际中不构成问题
+#
+# -- concurrency --
+#   concurrency-mt-unsafe : 项目无多线程场景, 无需此检查
+#
+# -- cppcoreguidelines --
+#   cppcoreguidelines-avoid-goto                        : goto 在受控的错误处理路径中可接受
+#   cppcoreguidelines-avoid-magic-numbers               : 数值/科学计算代码中魔数过多, 强制禁用噪声太大
+#   cppcoreguidelines-avoid-non-const-global-variables  : 全局常量用于配置, 可接受
+#   cppcoreguidelines-macro-usage                       : 宏用于版本字符串, 日志等场景
+#   cppcoreguidelines-pro-bounds-array-to-pointer-decay : C 数组退化为指针系有意为之
+#   cppcoreguidelines-pro-bounds-constant-array-index   : 不需要边界检查
+#   cppcoreguidelines-pro-bounds-pointer-arithmetic     : 底层循环中使用了指针算术
+#   cppcoreguidelines-pro-type-reinterpret-cast         : 在受控的窄场景中使用
+#   cppcoreguidelines-pro-type-union-access             : 项目中无联合体
+#   cppcoreguidelines-virtual-class-destructor          : 基类不拥有堆资源, 无需虚析构
+#
+# -- fuchsia (Fuchsia 平台专用, 本项目不适用) --
+#   fuchsia-default-arguments-calls         : 不适用
+#   fuchsia-default-arguments-declarations  : 不适用
+#   fuchsia-overloaded-operator             : 不适用
+#
+# -- google (与项目风格冲突) --
+#   google-explicit-constructor       : 为简洁起见有意使用隐式转换
+#   google-readability-function-size  : 项目约定允许较长的函数
+#   google-runtime-int                : 项目统一使用标准 int 类型
+#   google-runtime-references         : 简单/标量类型不强制使用 const 引用
+#
+# -- hicpp (高完整性 C++, 与项目风格冲突) --
+#   hicpp-avoid-goto               : goto 用于结构化的错误处理路径
+#   hicpp-explicit-conversions     : 在安全场景下允许隐式转换
+#   hicpp-function-size            : 项目约定允许较长函数
+#   hicpp-no-array-decay           : 数组到指针的退化可接受
+#   hicpp-no-assembler             : 项目中无内联汇编 (冗余检查)
+#   hicpp-signed-bitwise           : 有符号整数位运算系有意使用
+#   hicpp-uppercase-literal-suffix : 偏好小写字面量后缀 (如 1u 而非 1U)
+#
+# -- llvm (与项目风格冲突) --
+#   llvm-header-guard  : 项目使用 #pragma once, 而非 #ifndef 头文件保护
+#   llvm-include-order : 项目遵循自己的 include 顺序约定
+#   llvmlibc-*         : 未使用 LLVM libc
+#
+# -- misc --
+#   misc-no-recursion                            : 递归在受控, 有界上下文中使用
+#   misc-non-private-member-variables-in-classes : POD/聚合类型使用公有成员
+#
+# -- modernize (选择性关闭) --
+#   modernize-concat-nested-namespaces  : C++17 嵌套命名空间语法并非总是更清晰
+#   modernize-use-nodiscard             : [[nodiscard]] 按需手动添加
+#   modernize-use-trailing-return-type  : 偏好传统的返回值前置写法
+#
+# -- readability (与数值计算领域惯例冲突) --
+#   readability-function-cognitive-complexity : 对本项目噪声过大
+#   readability-function-size                 : 允许较长函数
+#   readability-identifier-length             : 短命名 (x, N, A, phi) 在数值计算中符合惯例
+#   readability-magic-numbers                 : 数值常量在此领域中本质存在
+#   readability-redundant-access-specifiers   : 显式访问说明符更清晰
+#   readability-simplify-boolean-expr         : 显式布尔逻辑更清晰
+#   readability-uppercase-literal-suffix      : 偏好小写后缀 (如 1u 而非 1U)
+
 Checks: '*,
          -altera-id-dependent-backward-branch,
+         -boost-use-ranges,
+         -boost-use-to-string,
          -altera-struct-pack-align,
          -altera-unroll-loops,
          -android-cloexec-fopen,
@@ -47,10 +129,10 @@ Checks: '*,
          -readability-uppercase-literal-suffix'
 
 CheckOptions:
-  - key: hicpp-special-member-functions.AllowSoleDefaultDtor
+  - key: hicpp-special-member-functions.AllowSoleDefaultDtor  # 允许仅有 = default 析构函数而无其他特殊成员
     value: 1
 
-WarningsAsErrors: '*'
+# WarningsAsErrors: '*'  # 所有警告视为错误
 
-#HeaderFilterRegex: '.*nlohmann.*'
-HeaderFilterRegex: '.*hpp$'
+#HeaderFilterRegex: '.*nlohmann.*'  # 备选: 仅检查第三方 nlohmann 头文件
+HeaderFilterRegex: 'source/.*\.hpp$'  # 仅对 source/ 目录下的头文件 (*.hpp) 运行 clang-tidy

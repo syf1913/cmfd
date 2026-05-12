@@ -1,17 +1,18 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
 #include <vector>
 
 #include <xtensor/containers/xtensor.hpp>
 
-enum class ConvectionScheme
+enum class ConvectionScheme : std::uint8_t
 {
     centralDifference,
     upwindDifference,
 };
 
-enum class SolverType
+enum class SolverType : std::uint8_t
 {
     jacobi,
     gaussSeidel,
@@ -22,18 +23,21 @@ enum class SolverType
 struct SimulationInput
 {
     std::string output_file_name;
-    double density;
-    double velocity;
-    double diffusion_coefficient;
-    double left_boundary_value;
-    double right_boundary_value;
-    ConvectionScheme convection_scheme;
-    double x_min;
-    double x_max;
-    double expansion_factor;
-    int node_count;
-    SolverType solver_type;
-    double omega;
+
+    int node_count{};
+
+    double density{};
+    double velocity{};
+    double diffusion_coefficient{};
+    double left_boundary_value{};
+    double right_boundary_value{};
+    double x_min{};
+    double x_max{};
+    double expansion_factor{};
+    double omega{};
+
+    ConvectionScheme convection_scheme{};
+    SolverType solver_type{};
 
     SimulationInput() = default;
     ~SimulationInput() = default;
@@ -45,8 +49,8 @@ struct SimulationInput
 
 struct SolverResult
 {
-    int iterations;
-    double residual;
+    int iterations{};
+    double residual{};
     std::vector<double> residual_history;
 
     SolverResult() = default;
@@ -59,8 +63,9 @@ struct SolverResult
 
 struct PostProcessResult
 {
-    double peclet_number;
-    double error_norm;
+    double peclet_number{};
+    double error_norm{};
+
     xt::xtensor<double, 1> exact_phi;
     xt::xtensor<double, 2> result_table;
 
